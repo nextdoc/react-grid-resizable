@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, render } from 'react-testing-library'
+import { render } from 'react-testing-library'
 import 'react-testing-library/cleanup-after-each'
 import { Cell } from './Cell'
 import { Col } from './Col'
@@ -27,15 +27,13 @@ describe('Row', () => {
   test('Row with initial height', async () => {
     let element
 
-    act(() => {
-      const { container } = render(<Row initialHeight={100} />)
+    const { container } = render(<Row initialHeight={100} />)
 
-      element = (container.children as HTMLCollectionOf<HTMLElement>)[0]
-    })
+    element = (container.children as HTMLCollectionOf<HTMLElement>)[0]
 
     expect(getComputedStyle(element).flex).toBe('0 0 auto')
     expect(getComputedStyle(element).width).toBe('100%')
-    expect(getComputedStyle(element).height).toBe('100px')
+    expect(getComputedStyle(element).height).toBe('')
   })
 })
 
@@ -51,14 +49,12 @@ describe('Col', () => {
   test('Col with initial width', async () => {
     let element
 
-    act(() => {
-      const { container } = render(<Col initialWidth={100} />)
+    const { container } = render(<Col initialWidth={100} />)
 
-      element = (container.children as HTMLCollectionOf<HTMLElement>)[0]
-    })
+    element = (container.children as HTMLCollectionOf<HTMLElement>)[0]
 
     expect(getComputedStyle(element).flex).toBe('0 0 auto')
     expect(getComputedStyle(element).height).toBe('100%')
-    expect(getComputedStyle(element).width).toBe('100px')
+    expect(getComputedStyle(element).width).toBe('')
   })
 })

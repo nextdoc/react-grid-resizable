@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, render } from 'react-testing-library'
+import { render } from 'react-testing-library'
 import 'react-testing-library/cleanup-after-each'
 import { Row } from '../CellWrapper/Row'
 import { actDrag } from '../Separators/dragTestUtils'
@@ -19,7 +19,10 @@ describe('Row Wrapper', () => {
         left: 0,
         right: 0,
         top: 0,
-        width: width || 200
+        width: width || 200,
+        x: 0,
+        y: 0,
+        toJSON: () => {}
       }
 
       return clientRect
@@ -30,20 +33,18 @@ describe('Row Wrapper', () => {
     let baseElement: HTMLElement
     let rowsWrapper: HTMLElement
     let rows: HTMLCollectionOf<HTMLElement>
-    act(() => {
-      const renderResult = render(
-        <RowsWrapper>
-          <Row key={1} initialHeight={100} />
-          <Row key={2} initialHeight={100} />
-          <Row key={3} initialHeight={100} />
-        </RowsWrapper>
-      )
+    const view = render(
+      <RowsWrapper>
+        <Row key={1} initialHeight={100} />
+        <Row key={2} initialHeight={100} />
+        <Row key={3} initialHeight={100} />
+      </RowsWrapper>
+    )
 
-      const container = renderResult.container
-      baseElement = renderResult.baseElement
-      rowsWrapper = (container.children as HTMLCollectionOf<HTMLElement>)[0]
-      rows = rowsWrapper.children as HTMLCollectionOf<HTMLElement>
-    })
+    const container = view.container
+    baseElement = view.baseElement
+    rowsWrapper = (container.children as HTMLCollectionOf<HTMLElement>)[0]
+    rows = rowsWrapper.children as HTMLCollectionOf<HTMLElement>
 
     expect(rows.length).toEqual(5)
 
@@ -84,20 +85,18 @@ describe('Row Wrapper', () => {
     let baseElement: HTMLElement
     let rowsWrapper: HTMLElement
     let rows: HTMLCollectionOf<HTMLElement>
-    act(() => {
-      const renderResult = render(
-        <RowsWrapper>
-          <Row key={1} initialHeight={100} />
-          <Row key={2} top={false} initialHeight={100} />
-          <Row key={3} initialHeight={100} />
-        </RowsWrapper>
-      )
+    const view = render(
+      <RowsWrapper>
+        <Row key={1} initialHeight={100} />
+        <Row key={2} top={false} initialHeight={100} />
+        <Row key={3} initialHeight={100} />
+      </RowsWrapper>
+    )
 
-      const container = renderResult.container
-      baseElement = renderResult.baseElement
-      rowsWrapper = (container.children as HTMLCollectionOf<HTMLElement>)[0]
-      rows = rowsWrapper.children as HTMLCollectionOf<HTMLElement>
-    })
+    const container = view.container
+    baseElement = view.baseElement
+    rowsWrapper = (container.children as HTMLCollectionOf<HTMLElement>)[0]
+    rows = rowsWrapper.children as HTMLCollectionOf<HTMLElement>
 
     expect(rows.length).toEqual(5)
 
