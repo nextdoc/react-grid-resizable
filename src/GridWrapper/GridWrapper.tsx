@@ -161,6 +161,7 @@ export const GridWrapper = <P extends CellProps>(
                 direction={props.direction}
                 onDrag={onDrag}
                 onDragStart={onDragStart}
+                callbacks={props.separatorProps?.callbacks}
               />,
               currentChild
             ]

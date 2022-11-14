@@ -13,6 +13,10 @@ export interface SeparatorDivProps {
   className?: string
   children?: ReactElement | ReactElement[]
   direction?: Direction
+  callbacks?: {
+    onDragStart?: (event: any) => void
+    onDragEnd?: (event: any) => void
+  }
 }
 
 interface SeparatorProps extends SeparatorDivProps {
@@ -48,6 +52,7 @@ const SeparatorDiv = styled.div<SeparatorDivProps>`
 `
 
 export const Separator = (props: SeparatorProps) => {
+  const { callbacks } = props
   const [mousePositionAtLastMouseEvent, setMousePositionAtLastMouseEvent] =
     useState<number | null>(null)
 
@@ -66,6 +71,13 @@ export const Separator = (props: SeparatorProps) => {
     const mousePosition = getPositionFromDragEvent(props.direction, event)
     setMousePositionAtLastMouseEvent(mousePosition)
     props.onDragStart()
+    if (!(callbacks && callbacks.onDragStart)) {
+      return
+    }
+    callbacks.onDragStart({
+      clientX: event.clientX,
+      clientY: event.clientY
+    })
   }
   /**
    * End dragging
@@ -124,6 +136,15 @@ export const Separator = (props: SeparatorProps) => {
       className={props.className}
       direction={props.direction}
       onMouseDown={mouseDownEventHandler}
+      onMouseUp={(event) => {
+        if (!(callbacks && callbacks.onDragEnd)) {
+          return
+        }
+        callbacks.onDragEnd({
+          clientX: event.clientX,
+          clientY: event.clientY
+        })
+      }}
     >
       {props.children}
     </SeparatorDiv>

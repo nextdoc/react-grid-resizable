@@ -152,3 +152,8 @@ For example:
 ```
 
 Setting props `top` and `bottom` doesn't have any effect on `Col` tags and setting props `left` and `right` doesn't have any effect on `Row` tags.
+
+
+### Separator Callbacks
+`Separator` accepts a `callbacks` prop with `onDragStart` and `onDragEnd` functions that provide a `MouseEvent` event that can be used to, ie, remember handle positions using local storage.
+
